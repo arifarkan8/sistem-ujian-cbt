@@ -1,0 +1,193 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  GURU
+  SISWA
+}
+
+enum JawabanOption {
+  A
+  B
+  C
+  D
+}
+
+enum StatusSesi {
+  TERBUKA
+  TERTUTUP
+}
+
+enum StatusUjian {
+  SEDANG_MENGERJAKAN
+  SELESAI
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  role      Role
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  siswa Siswa?
+  guru  Guru?
+  admin Admin?
+  logs  AktivitasLog[]
+
+  @@map("users")
+}
+
+model Kelas {
+  id        Int    @id @default(autoincrement())
+  namaKelas String
+
+  siswa Siswa[]
+
+  @@map("kelas")
+}
+
+model Siswa {
+  id      Int    @id @default(autoincrement())
+  userId  Int    @unique
+  nama    String
+  nis     String @unique
+  kelasId Int
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kelas Kelas @relation(fields: [kelasId], references: [id], onDelete: Cascade)
+
+  ujianSiswa UjianSiswa[]
+  nilai      Nilai[]
+
+  @@map("siswa")
+}
+
+model Guru {
+  id     Int     @id @default(autoincrement())
+  userId Int     @unique
+  nama   String
+  nip    String? @unique
+
+  user  User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mapel Mapel[]
+
+  @@map("guru")
+}
+
+model Admin {
+  id     Int    @id @default(autoincrement())
+  userId Int    @unique
+  nama   String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("admin")
+}
+
+model Mapel {
+  id        Int    @id @default(autoincrement())
+  namaMapel String
+  guruId    Int?
+
+  guru      Guru?       @relation(fields: [guruId], references: [id], onDelete: SetNull)
+  soal      Soal[]
+  sesiUjian SesiUjian[]
+
+  @@map("mapel")
+}
+
+model Soal {
+  id           Int           @id @default(autoincrement())
+  mapelId      Int
+  pertanyaan   String
+  opsiA        String
+  opsiB        String
+  opsiC        String
+  opsiD        String
+  jawabanBenar JawabanOption
+  bobot        Int           @default(1)
+
+  mapel   Mapel     @relation(fields: [mapelId], references: [id], onDelete: Cascade)
+  jawaban Jawaban[]
+
+  @@map("soal")
+}
+
+model SesiUjian {
+  id           Int        @id @default(autoincrement())
+  mapelId      Int
+  token        String     @unique
+  waktuMulai   DateTime
+  waktuSelesai DateTime
+  status       StatusSesi @default(TERTUTUP)
+
+  mapel      Mapel        @relation(fields: [mapelId], references: [id], onDelete: Cascade)
+  ujianSiswa UjianSiswa[]
+  nilai      Nilai[]
+
+  @@map("sesi_ujian")
+}
+
+model UjianSiswa {
+  id      Int         @id @default(autoincrement())
+  siswaId Int
+  sesiId  Int
+  mulai   DateTime    @default(now())
+  selesai DateTime?
+  status  StatusUjian @default(SEDANG_MENGERJAKAN)
+
+  siswa   Siswa      @relation(fields: [siswaId], references: [id], onDelete: Cascade)
+  sesi    SesiUjian  @relation(fields: [sesiId], references: [id], onDelete: Cascade)
+  jawaban Jawaban[]
+
+  @@map("ujian_siswa")
+}
+
+model Jawaban {
+  id           Int            @id @default(autoincrement())
+  ujianSiswaId Int
+  soalId       Int
+  jawaban      JawabanOption?
+  raguRagu     Boolean        @default(false)
+
+  ujianSiswa UjianSiswa @relation(fields: [ujianSiswaId], references: [id], onDelete: Cascade)
+  soal       Soal       @relation(fields: [soalId], references: [id], onDelete: Cascade)
+
+  @@map("jawaban")
+}
+
+model Nilai {
+  id        Int      @id @default(autoincrement())
+  siswaId   Int
+  sesiId    Int
+  benar     Int      @default(0)
+  salah     Int      @default(0)
+  kosong    Int      @default(0)
+  nilai     Float    @default(0)
+  createdAt DateTime @default(now())
+
+  siswa Siswa     @relation(fields: [siswaId], references: [id], onDelete: Cascade)
+  sesi  SesiUjian @relation(fields: [sesiId], references: [id], onDelete: Cascade)
+
+  @@map("nilai")
+}
+
+model AktivitasLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  aktivitas String
+  waktu     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("aktivitas_log")
+}
