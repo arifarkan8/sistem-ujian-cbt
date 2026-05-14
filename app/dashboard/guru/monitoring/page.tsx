@@ -47,11 +47,10 @@ export default function MonitoringPage() {
             </header>
 
             {/* Grid Statistik Cepat */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 <StatCard icon={Users} label="Total Peserta" value="36" color="blue" />
                 <StatCard icon={Activity} label="Sedang Mengerjakan" value="34" color="emerald" />
                 <StatCard icon={CheckCircle2} label="Selesai Ujian" value="1" color="slate" />
-                <StatCard icon={ShieldAlert} label="Peringatan Curang" value="4" color="red" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -80,7 +79,6 @@ export default function MonitoringPage() {
                                         <th className="py-5 px-6 font-bold">Peserta Ujian</th>
                                         <th className="py-5 px-6 font-bold text-center">Status</th>
                                         <th className="py-5 px-6 font-bold text-center">Progres</th>
-                                        <th className="py-5 px-6 font-bold text-center">Pelanggaran</th>
                                         <th className="py-5 px-6 font-bold text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -124,17 +122,6 @@ export default function MonitoringPage() {
                                                 </div>
                                             </td>
 
-                                            {/* Indikator Anti-Cheat */}
-                                            <td className="py-4 px-6 text-center">
-                                                {siswa.pelanggaran > 0 ? (
-                                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-red-50 text-red-600 rounded-lg text-xs font-bold border border-red-100 animate-pulse">
-                                                        <AlertTriangle size={14} /> {siswa.pelanggaran} Kali Pindah Tab
-                                                    </span>
-                                                ) : (
-                                                    <span className="text-xs font-bold text-slate-300">-</span>
-                                                )}
-                                            </td>
-
                                             {/* Tombol Aksi */}
                                             <td className="py-4 px-6 text-center">
                                                 <button className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all" title="Lihat Layar Siswa">
@@ -159,12 +146,6 @@ export default function MonitoringPage() {
                         </div>
 
                         <div className="p-6 space-y-6 max-h-[600px] overflow-y-auto custom-scrollbar">
-                            <LogEntry
-                                time="10:15:22"
-                                user="Siti Aminah"
-                                action="Peringatan Sistem! Terdeteksi meninggalkan halaman ujian."
-                                type="danger"
-                            />
                             <LogEntry
                                 time="10:12:05"
                                 user="Muhammad Arif Arkan"

@@ -74,7 +74,7 @@ export default function BankSoalKunciPage() {
                             value={kodeUjian}
                             onChange={(e) => setKodeUjian(e.target.value.toUpperCase())}
                             placeholder="CONTOH: WEB1-PAS-2026"
-                            className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500/20 transition-all font-bold tracking-wider"
+                            className="w-full px-5 py-4 text-slate-900 placeholder:text-slate-400 bg-white border border-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors font-bold tracking-wider"
                         />
                     </div>
                     <div className="bg-blue-50/50 rounded-2xl p-4 border border-blue-100 flex items-start gap-3">
@@ -90,7 +90,7 @@ export default function BankSoalKunciPage() {
                     <div className="bg-emerald-50/50 border-b border-emerald-100 px-8 py-5">
                         <h3 className="font-bold text-slate-800 flex items-center gap-2"><FileSpreadsheet className="text-emerald-600" size={24} /> Kunci Jawaban (Excel)</h3>
                     </div>
-                    <div className="p-8"><textarea value={excelData} onChange={(e) => setExcelData(e.target.value)} placeholder="Paste No, Kunci, Skor dari Excel..." className="w-full h-48 p-4 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl outline-none focus:border-emerald-500 focus:bg-white transition-all font-mono text-xs resize-none" /></div>
+                    <div className="p-8"><textarea value={excelData} onChange={(e) => setExcelData(e.target.value)} placeholder="Paste No, Kunci, Skor dari Excel..." className="w-full h-48 p-4 text-slate-900 placeholder:text-slate-400 bg-white border-2 border-dashed border-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors font-mono text-xs resize-none" /></div>
                 </div>
 
                 {/* 3. Dokumen Word */}

@@ -9,15 +9,15 @@ export default function UjianSelesaiPage() {
             <div className="w-full max-w-lg bg-white rounded-[2.5rem] p-10 shadow-2xl border border-slate-200 text-center relative overflow-hidden">
 
                 {/* Dekorasi Latar */}
-                <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-green-50 to-white/0 pointer-events-none"></div>
+                <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-blue-50 to-white/0 pointer-events-none"></div>
 
                 {/* Ikon Sukses */}
-                <div className="relative mx-auto w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-8 border-4 border-white shadow-xl shadow-green-100/50">
-                    <CheckCircle size={48} className="text-green-500" />
+                <div className="relative mx-auto w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mb-8 border-4 border-white shadow-xl shadow-blue-100/50">
+                    <CheckCircle size={48} className="text-blue-500" />
                 </div>
 
                 <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-3">
-                    Ujian Berhasil Disimpan
+                    Ujian SMK NUFA CITRA MANDIRI Berhasil Disimpan
                 </h1>
 
                 <p className="text-slate-500 text-sm leading-relaxed px-4 mb-8">
@@ -36,11 +36,13 @@ export default function UjianSelesaiPage() {
                 </div>
 
                 {/* Tombol Kembali */}
-                <Link href="/dashboard/siswa" className="block w-full">
-                    <button className="w-full bg-slate-900 hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-xl shadow-slate-900/20 active:scale-[0.98] flex items-center justify-center gap-2">
-                        <Home size={18} /> Kembali ke Dashboard
-                    </button>
-                </Link>
+                <div className="flex justify-center mt-4">
+                    <Link href="/dashboard/siswa">
+                        <button className="px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/20 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer">
+                            <Home size={18} /> Kembali ke Dashboard
+                        </button>
+                    </Link>
+                </div>
 
             </div>
 
