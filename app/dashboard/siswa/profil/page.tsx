@@ -6,6 +6,8 @@ import { User, MapPin, Calendar, CreditCard, GraduationCap, BookOpen, KeyRound, 
 export default function ProfilSiswaPage() {
     // State untuk mengontrol Modal (terbuka/tertutup)
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+    const [showToast, setShowToast] = useState(false);
 
     return (
         <div className="max-w-4xl mx-auto pb-10 relative">
@@ -109,15 +111,15 @@ export default function ProfilSiswaPage() {
                             <form className="space-y-4">
                                 <div className="space-y-1">
                                     <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Kata Sandi Saat Ini</label>
-                                    <input type="password" placeholder="••••••••" className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                                    <input type="password" placeholder="••••••••" className="w-full px-4 py-3 text-slate-900 placeholder:text-slate-400 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors" />
                                 </div>
                                 <div className="space-y-1 pt-2">
                                     <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Kata Sandi Baru</label>
-                                    <input type="password" placeholder="••••••••" className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                                    <input type="password" placeholder="••••••••" className="w-full px-4 py-3 text-slate-900 placeholder:text-slate-400 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors" />
                                 </div>
                                 <div className="space-y-1">
                                     <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Konfirmasi Sandi Baru</label>
-                                    <input type="password" placeholder="••••••••" className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                                    <input type="password" placeholder="••••••••" className="w-full px-4 py-3 text-slate-900 placeholder:text-slate-400 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors" />
                                 </div>
 
                                 <div className="pt-6 flex gap-3">
@@ -131,17 +133,37 @@ export default function ProfilSiswaPage() {
                                     <button
                                         type="button"
                                         onClick={() => {
-                                            alert("Simulasi: Sandi berhasil diubah! (Nanti ini akan memanggil API backend)");
-                                            setIsModalOpen(false);
+                                            setIsSaving(true);
+                                            setTimeout(() => {
+                                                setIsSaving(false);
+                                                setIsModalOpen(false);
+                                                setShowToast(true);
+                                                setTimeout(() => {
+                                                    setShowToast(false);
+                                                }, 3000);
+                                            }, 1000);
                                         }}
-                                        className="flex-1 px-4 py-3 rounded-xl font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20"
+                                        disabled={isSaving}
+                                        className={`flex-1 px-4 py-3 rounded-xl font-semibold text-white transition-colors shadow-lg ${isSaving ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-600/20'}`}
                                     >
-                                        Simpan Perubahan
+                                        {isSaving ? "⏳ Menyimpan..." : "Simpan Perubahan"}
                                     </button>
                                 </div>
                             </form>
                         </div>
 
+                    </div>
+                </div>
+            )}
+
+            {showToast && (
+                <div className="fixed top-8 right-8 z-[9999] bg-white border-l-4 border-emerald-500 shadow-xl rounded-md p-4 flex items-center gap-3 animate-in slide-in-from-right-8 fade-in duration-300">
+                    <div className="bg-emerald-100 text-emerald-600 rounded-full p-1">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <div>
+                        <h4 className="text-sm font-bold text-slate-800">Berhasil!</h4>
+                        <p className="text-xs text-slate-500">Kata sandi Anda telah diperbarui.</p>
                     </div>
                 </div>
             )}

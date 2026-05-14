@@ -11,7 +11,6 @@ export default function SiswaDashboardLayout({ children }: { children: React.Rea
 
     const menuItems = [
         { name: 'Dashboard Ujian', icon: LayoutDashboard, href: '/dashboard/siswa' },
-        { name: 'Profil Saya', icon: UserCircle, href: '/dashboard/siswa/profil' },
         { name: 'Rangkuman Nilai', icon: FileSpreadsheet, href: '/dashboard/siswa/nilai' },
     ];
 
@@ -31,16 +30,21 @@ export default function SiswaDashboardLayout({ children }: { children: React.Rea
                 </button>
 
                 {/* Header Sidebar (Info Singkat) */}
-                <div className={`h-20 flex items-center border-b border-slate-100 px-6 ${!isSidebarOpen && 'justify-center px-0'}`}>
-                    <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold shrink-0">
-                        MA
-                    </div>
-                    {isSidebarOpen && (
-                        <div className="ml-3 overflow-hidden">
-                            <h2 className="text-sm font-bold text-slate-800 truncate">Muhammad Arif Arkan</h2>
-                            <p className="text-xs text-slate-500 truncate">231011403233</p>
+                <div className={`h-20 flex items-center border-b border-slate-100 px-4 ${!isSidebarOpen && 'justify-center px-0'}`}>
+                    <Link
+                        href="/dashboard/siswa/profil"
+                        className={`flex items-center w-full p-2 hover:bg-slate-100 transition-colors rounded-lg cursor-pointer ${!isSidebarOpen && 'justify-center'}`}
+                    >
+                        <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold shrink-0">
+                            MA
                         </div>
-                    )}
+                        {isSidebarOpen && (
+                            <div className="ml-3 overflow-hidden">
+                                <h2 className="text-sm font-bold text-slate-800 truncate">Muhammad Arif Arkan</h2>
+                                <p className="text-xs text-slate-500 truncate">231011403233</p>
+                            </div>
+                        )}
+                    </Link>
                 </div>
 
                 {/* Menu Navigasi */}

@@ -24,9 +24,8 @@ export default function ExamInterfacePage() {
     // State Timer
     const [timeLeft, setTimeLeft] = useState(5400);
 
-    // STATE BARU: Sistem Anti-Kecurangan
-    const [warningCount, setWarningCount] = useState(0);
-    const [showWarning, setShowWarning] = useState(false);
+    // State Modal Konfirmasi
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
     // Efek Timer
     useEffect(() => {
@@ -34,20 +33,6 @@ export default function ExamInterfacePage() {
             setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
         }, 1000);
         return () => clearInterval(timer);
-    }, []);
-
-    // EFEK BARU: Deteksi Pindah Tab (Anti-Kecurangan)
-    useEffect(() => {
-        const handleVisibilityChange = () => {
-            if (document.hidden) {
-                // Jika tab tidak aktif (disembunyikan/pindah), tambah pelanggaran & munculkan peringatan
-                setWarningCount((prev) => prev + 1);
-                setShowWarning(true);
-            }
-        };
-
-        document.addEventListener("visibilitychange", handleVisibilityChange);
-        return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
     }, []);
 
     const formatTime = (seconds: number) => {
@@ -68,10 +53,7 @@ export default function ExamInterfacePage() {
 
     // HANDLER BARU: Arahkan ke halaman selesai
     const handleSelesai = () => {
-        const confirmSubmit = window.confirm("Apakah Anda yakin ingin mengakhiri ujian? Jawaban tidak dapat diubah lagi.");
-        if (confirmSubmit) {
-            router.push('/ujian/selesai');
-        }
+        setIsConfirmOpen(true);
     };
 
     return (
@@ -154,35 +136,36 @@ export default function ExamInterfacePage() {
                                 return <button key={q.id} onClick={() => setCurrentIndex(idx)} className={`h-11 w-full rounded-lg border-2 flex items-center justify-center text-sm transition-all ${boxClass}`}>{q.id}</button>;
                             })}
                         </div>
-                        {/* Status Pelanggaran (Tampil jika pernah melanggar) */}
-                        {warningCount > 0 && (
-                            <div className="mt-8 p-4 bg-red-50 border border-red-200 rounded-xl">
-                                <p className="text-xs font-bold text-red-600 flex items-center gap-1.5"><ShieldAlert size={14} /> Peringatan Sistem</p>
-                                <p className="text-xs text-red-800 mt-1">Anda terdeteksi meninggalkan halaman sebanyak <strong>{warningCount} kali</strong>.</p>
-                            </div>
-                        )}
                     </div>
                 </div>
 
             </div>
 
-            {/* --- MODAL ANTI KECURANGAN --- */}
-            {showWarning && (
+            {/* Modal Konfirmasi Selesai Ujian */}
+            {isConfirmOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
                     <div className="bg-white rounded-[2rem] w-full max-w-md p-8 shadow-2xl text-center animate-in fade-in zoom-in duration-200">
-                        <div className="w-20 h-20 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <ShieldAlert size={40} />
+                        <div className="w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <CheckCircle2 size={40} />
                         </div>
-                        <h2 className="text-2xl font-black text-slate-900 mb-2">Peringatan Keras!</h2>
-                        <p className="text-slate-600 mb-8 leading-relaxed">
-                            Sistem mendeteksi Anda mencoba membuka tab baru atau mengecilkan browser. Ini adalah pelanggaran ke-<strong>{warningCount}</strong>. Tindakan ini dicatat oleh sistem pengawas.
+                        <h2 className="text-2xl font-black text-slate-900 mb-2">Konfirmasi Selesai</h2>
+                        <p className="text-slate-600 mb-8 leading-relaxed text-sm md:text-base">
+                            Apakah Anda yakin ingin mengakhiri ujian? Jawaban tidak dapat diubah lagi.
                         </p>
-                        <button
-                            onClick={() => setShowWarning(false)}
-                            className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-red-600/20"
-                        >
-                            Saya Mengerti & Lanjutkan
-                        </button>
+                        <div className="flex gap-4">
+                            <button
+                                onClick={() => setIsConfirmOpen(false)}
+                                className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 md:py-4 rounded-xl transition-all"
+                            >
+                                Batal
+                            </button>
+                            <button
+                                onClick={() => router.push('/ujian/selesai')}
+                                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 md:py-4 rounded-xl transition-all shadow-lg shadow-blue-600/20"
+                            >
+                                Ya, Akhiri Ujian
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

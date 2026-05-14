@@ -13,9 +13,9 @@ export default function GuruDashboardHome() {
 
             {/* Kartu Statistik Atas */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                <StatCard icon={Users} title="Total Siswa" value="324" color="blue" subtitle="Terdaftar di sistem" />
-                <StatCard icon={Database} title="Bank Soal" value="12" color="indigo" subtitle="Mata pelajaran aktif" />
-                <StatCard icon={Activity} title="Sedang Ujian" value="45" color="emerald" subtitle="Siswa online saat ini" />
+                <StatCard icon={Users} title="Total Siswa" value="324" color="purple" subtitle="Terdaftar di sistem" />
+                <StatCard icon={Database} title="Bank Soal" value="12" color="violet" subtitle="Mata pelajaran aktif" />
+                <StatCard icon={Activity} title="Sedang Ujian" value="45" color="fuchsia" subtitle="Siswa online saat ini" />
                 <StatCard icon={CheckCircle2} title="Selesai Ujian" value="279" color="slate" subtitle="Hari ini" />
             </div>
 
@@ -25,7 +25,7 @@ export default function GuruDashboardHome() {
                 <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                     <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
                         <h2 className="font-bold text-slate-800">Jadwal Ujian Hari Ini</h2>
-                        <span className="text-xs font-bold bg-blue-100 text-blue-700 px-3 py-1 rounded-full uppercase tracking-wider">
+                        <span className="text-xs font-bold bg-purple-100 text-purple-700 px-3 py-1 rounded-full uppercase tracking-wider">
                             8 Mei 2026
                         </span>
                     </div>
@@ -45,9 +45,9 @@ export default function GuruDashboardHome() {
                     </div>
                     <div className="p-6">
                         <div className="space-y-5">
-                            <LogItem siswa="Budi Santoso" pesan="Terdeteksi pindah tab" waktu="Baru saja" />
+                            <LogItem siswa="Sistem" pesan="Sesi ujian akan berakhir dalam 10 menit." waktu="Baru saja" />
                             <LogItem siswa="Andi Wijaya" pesan="Koneksi terputus" waktu="5 menit lalu" />
-                            <LogItem siswa="Siti Aminah" pesan="Terdeteksi pindah tab" waktu="12 menit lalu" />
+                            <LogItem siswa="Siti Aminah" pesan="Telah mengumpulkan ujian." waktu="12 menit lalu" />
                         </div>
                         <button className="w-full mt-6 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-semibold rounded-xl border border-slate-200 transition-colors">
                             Lihat Monitoring Selengkapnya
@@ -64,9 +64,9 @@ export default function GuruDashboardHome() {
 
 function StatCard({ icon: Icon, title, value, color, subtitle }: any) {
     const colorClasses = {
-        blue: 'bg-blue-50 text-blue-600',
-        indigo: 'bg-indigo-50 text-indigo-600',
-        emerald: 'bg-emerald-50 text-emerald-600',
+        purple: 'bg-purple-50 text-purple-600',
+        violet: 'bg-violet-50 text-violet-600',
+        fuchsia: 'bg-fuchsia-50 text-fuchsia-600',
         slate: 'bg-slate-50 text-slate-600',
     };
 
@@ -97,7 +97,7 @@ function ScheduleItem({ mapel, waktu, status, token }: any) {
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Token Aktif</p>
                     <p className="font-mono font-bold text-slate-800">{token}</p>
                 </div>
-                <span className={`px-3 py-1 text-xs font-bold rounded-full ${isRunning ? 'bg-emerald-100 text-emerald-700 animate-pulse' : 'bg-slate-100 text-slate-500'}`}>
+                <span className={`px-3 py-1 text-xs font-bold rounded-full ${isRunning ? 'bg-purple-100 text-purple-700 animate-pulse' : 'bg-slate-100 text-slate-500'}`}>
                     {status}
                 </span>
             </div>
